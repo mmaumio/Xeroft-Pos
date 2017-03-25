@@ -12,26 +12,26 @@
             	</tr>
             	<tr>
             	<td>
-            		Current Quantity
+            		Current Quantity: 
             	</td>
             	<td>
             		{{ $item->quantity }}
             	</td>
             	</tr>
             	<tr>
-            		<td>Add/subtract *</td>
-		            <td>
+            	<td>Add/subtract *</td>
+		        <td>
 		            <form action="{{ route('inventory.update', [ 'id' => $item->id ] ) }}" method="post">
 		                <div class="form-group">
-		                    <input class="form-control" type="text" name="in_stock" id="in-stock"></input>
+		                    <input class="form-control" type="text" name="in_stock" id="in-stock" />
 		                </div>
-		                <input class="form-control" type="hidden" name="remraks" id="remraks" value="Manually added"></input>
+		                <input class="form-control" type="hidden" name="remraks" id="remarks" value="Manually added" />
 		                
-		                <input type="hidden" name="_token" value="{{ Session::token() }}"></input>
+		                <input type="hidden" name="_token" value="{{ Session::token() }}" />
 		                 {{ method_field('PUT') }}
 		                <button type="submit" class="btn btn-primary">Update</button>
 		            </form>
-		        	</td>
+		        </td>
 		        </tr>	
 		    </table>
         </div>

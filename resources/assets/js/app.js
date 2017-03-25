@@ -22,7 +22,8 @@ var app = new Vue({
     el: '#main',
     data: { 
         searchString: "",
-        articles: []
+        articles: [],
+        items: [],
     },
     created: function() {
         this.fetchData();
@@ -31,11 +32,51 @@ var app = new Vue({
         fetchData: function () {
             this.$http.get('api/items').then((response) => {
                 this.articles = response.body;
-            }, (response) => {
-               ; 
+            }, (response) => { 
+                return false;
             });
+        },
+        addItem: function (article) {
+            var found = false;
+
+            /*for (var i = 0; i < this.items.length; i++) {
+                if (this.items[i].article === article) {
+                    this.items[i].numberOfItems++;
+                    found = true;
+                    break;
+                }
+            }*/
+
+            if (!found) {
+                this.items.push({   id: article.id,
+                                    tracking_number: article.tracking_number,
+                                    item_name: article.item_name,
+                                    description: article.description,
+                                    buying_price: article.buying_price,
+                                    quantity: 1,
+                                    numberOfItems: 1 
+                                });
+
+                this.$http.set('api/receivingitems', this.items ).then(response => {
+
+                    // get status
+                    response.status;
+
+                }, response => {
+                    // error callback
+                });
+
+            }
+        },
+        removeItem: function(article) {
+            for (var i = 0; i < this.items.length; i++) {
+                if (this.items[i] === article) {
+                    this.items.splice(i, 1);
+                    break;
+                }
+            }
         }
-    },
+    },    
     computed: {
         filteredArticles: function () {
             var articles_array = this.articles,
@@ -55,7 +96,22 @@ var app = new Vue({
 
             // Return an array with the filtered data.
             return articles_array;;
-        }
+        },
+
+        subtotal: function() {
+            var subtotal = 0;
+
+            this.items.forEach(function(item){
+                subtotal += item.buying_price * item.quantity;
+
+            });
+
+
+            return subtotal;
+
+       },
+
     }
 }); 
+
 

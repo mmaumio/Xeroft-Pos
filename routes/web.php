@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('suppliers', 'SupplierController');
     Route::resource('employees', 'EmployeeController');
     Route::resource('receivings', 'ReceivingController');
+    Route::resource('receiving-item', 'ReceivingItemController');
 
     
 
